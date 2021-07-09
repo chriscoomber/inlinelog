@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'maven-publish'
+}
+
+group ="com.wyvernlabs"
+
+ext {
+    // Increment with every release
+    versionCode = 1
+    // Change with every release, follow semantic versioning.
+    versionName = "1.0.0"
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode project.versionCode
+        versionName project.versionName
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String" ,"VERSION_NAME", "\"${project.versionName}\""
+        }
+        debug {
+            buildConfigField "String" ,"VERSION_NAME", "\"${project.versionName}-debug\""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = group
+                artifactId = project.name
+                version = project.versionName
+
+                artifact(sourceJar)
+            }
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId = group
+                artifactId = "${project.name}-debug"
+                version = project.versionName
+
+                artifact(sourceJar)
+            }
+        }
+    }
+}

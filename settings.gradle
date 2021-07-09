@@ -1,0 +1,3 @@
+rootProject.name = "InlineLog"
+include ':sampleapp'
+include ':inlinelog'

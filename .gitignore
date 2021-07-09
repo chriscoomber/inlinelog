@@ -1,0 +1,18 @@
+/.idea/
+*.iml
+
+# Gradle files
+.gradle/
+/build/
+/*/build/
+/*/debug
+/*/release
+
+# Local configuration file (sdk path, etc)
+/local.properties
+
+# Keystores
+/*.jks
+
+# Mac filesystem artefact
+.DS_Store
