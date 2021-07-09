@@ -44,7 +44,7 @@ Using this library, you do not need any special proguard rules.
 
 ## Usage
 
-In your top level `build.gradle` file, include a repository that hosts this library (TODO).
+In your top level `build.gradle` file, include the following repository:
 
 ```
 allprojects {
@@ -52,7 +52,7 @@ allprojects {
         google()
         mavenCentral()
         ...
-        maven { url 'https://the.repository.com' }  // Add this line
+        maven { url 'https://github.com/chriscoomber/inlinelog/raw/main/repository' }  // Add this line
     }           
 }
 ```
@@ -64,6 +64,18 @@ dependencies {
     ...
     releaseImplementation 'com.wyvernlabs.inlinelog:1.0.0'
     debugImplementation 'com.wyvernlabs.inlinelog-debug:1.0.0'
+}
+```
+
+You may also need to specify your JVM target:
+
+```
+android {
+    ...
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 ```
 
